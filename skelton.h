@@ -34,9 +34,6 @@ typedef struct skelton_interface{
     void (*run)( skelton_info_t *info );
     void (*destroy)( skelton_info_t *info );
 
-    /*call back for module*/
-    float (*get_config1)( module_info_t *info, float param );
-
 }skelton_interface_t;
 
 extern skelton_interface_t *skelton_funcs;

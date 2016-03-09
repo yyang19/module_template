@@ -5,6 +5,9 @@
 #include "env.h"
 #include "skelton.h"
 #include "module.h"
+
+static module_callback_t _module_cb;
+
 typedef struct skelton_priv{
 
     int var;
@@ -37,6 +40,9 @@ _init( skelton_info_t *s ){
     s->m_info.config.param1 = s->config.param1;
     s->m_info.config.param2 = s->config.param2;
     s->m_info.config.m_var  = 0;
+
+    /* module callback function */
+    s->m_info.callback = _module_cb;
 
     module_interface->init(&s->m_info);
 
@@ -92,7 +98,10 @@ static skelton_interface_t _funcs = {
    _init,
    _run,
    _delete,
-   _func1,
+};
+
+static module_callback_t _module_cb = {
+    _func1
 };
 
 skelton_interface_t *skelton_funcs = &_funcs;

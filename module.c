@@ -2,7 +2,6 @@
 #include <string.h>
 #include "env.h"
 #include "module.h"
-#include "skelton.h"
 #include <assert.h>
 
 typedef struct module_priv{
@@ -19,7 +18,6 @@ _my_module_init( module_info_t *info ){
 
     assert(info);
     
-    info->callback.cb_skelton = skelton_funcs->get_config1;
     info->priv = (void *) malloc (sizeof(module_priv_t) );
 
     if( !info->priv )
