@@ -52,7 +52,7 @@ _my_module_func1( module_info_t *info ) {
 
 static float
 _my_module_func2( module_info_t *info ) {
-   return info->callback.cb_skelton( info, info->config.param2 );
+   return info->callback.cb_skeleton( info, info->config.param2 );
 }
 
 

@@ -3,31 +3,31 @@
 #include <string.h>
 #include <assert.h>
 #include "env.h"
-#include "skelton.h"
+#include "skeleton.h"
 #include "module.h"
 
 static module_callback_t _module_cb;
 
-typedef struct skelton_priv{
+typedef struct skeleton_priv{
 
     int var;
     int *arr;
 
-}skelton_priv_t;
+}skeleton_priv_t;
 
 static int 
-_init( skelton_info_t *s ){
+_init( skeleton_info_t *s ){
 
     assert(s);
 
-    skelton_priv_t *p;
+    skeleton_priv_t *p;
 
-    s->priv = (void *) malloc (sizeof(struct skelton_priv) );
+    s->priv = (void *) malloc (sizeof(struct skeleton_priv) );
 
     if( !s->priv )
         goto priv_fail;
 
-    p = (skelton_priv_t *) s->priv;
+    p = (skeleton_priv_t *) s->priv;
 
     p->var =500;
     p->arr = (int *) malloc( sizeof(int) * s->config.param1 );
@@ -57,7 +57,7 @@ priv_fail:
 }
 
 static void
-_run( skelton_info_t *s_info){
+_run( skeleton_info_t *s_info){
 
    int ret1;
    float ret2;
@@ -73,13 +73,13 @@ _run( skelton_info_t *s_info){
 }
 
 static void
-_delete( skelton_info_t *s ){
+_delete( skeleton_info_t *s ){
 
-    skelton_priv_t *p;
+    skeleton_priv_t *p;
 
     module_interface->destroy(&s->m_info);
 
-    p = (skelton_priv_t *) s->priv;
+    p = (skeleton_priv_t *) s->priv;
     free( p->arr );
     free( s->priv );
 }
@@ -87,14 +87,14 @@ _delete( skelton_info_t *s ){
 static float
 _func1( module_info_t *m, float param ){
 
-   skelton_info_t *s = SYS_CONTAINER_OF( m, skelton_info_t, m_info );
-   skelton_priv_t *p = (skelton_priv_t *)s->priv;
+   skeleton_info_t *s = SYS_CONTAINER_OF( m, skeleton_info_t, m_info );
+   skeleton_priv_t *p = (skeleton_priv_t *)s->priv;
 
    return p->var * param;
 }
 
 
-static skelton_interface_t _funcs = {
+static skeleton_interface_t _funcs = {
    _init,
    _run,
    _delete,
@@ -104,23 +104,23 @@ static module_callback_t _module_cb = {
     _func1
 };
 
-skelton_interface_t *skelton_funcs = &_funcs;
+skeleton_interface_t *skeleton_funcs = &_funcs;
 
 int
 main(){
 
-   skelton_info_t s;
+   skeleton_info_t s;
 
-   /*skelton configuration*/
+   /*skeleton configuration*/
    strcpy( s.config.name, "uoft" );
    s.config.param1 = 20;
    s.config.param2 = 0.5; 
 
-   /*skelton initialization*/
-   skelton_funcs->init(&s);
+   /*skeleton initialization*/
+   skeleton_funcs->init(&s);
 
-   skelton_funcs->run(&s);
+   skeleton_funcs->run(&s);
 
-   skelton_funcs->destroy(&s);
+   skeleton_funcs->destroy(&s);
    return 0;
 }

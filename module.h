@@ -13,7 +13,7 @@ typedef struct module_config{
 }module_config_t;
 
 typedef struct module_callback{
-   float (*cb_skelton) (module_info_t *info, float param);
+   float (*cb_skeleton) (module_info_t *info, float param);
 }module_callback_t;
 
 typedef struct module_info{
